@@ -1,0 +1,39 @@
+## Sequence Assignment
+  
+  
+Imports the Sequences_A5_MACMILLAN_JAYDE.csv file
+```{r}
+Sequences <- read.csv("Sequences_A5_MACMILLAN_JAYDE.csv")
+```
+
+Displays the three sequences. 
+```{r}
+aCount<-nchar(gsub("[^A]", "", Sequences$Sequence))
+tCount<-nchar(gsub("[^T]", "", Sequences$Sequence))
+cCount<-nchar(gsub("[^C]", "", Sequences$Sequence))
+gCount<-nchar(gsub("[^G]", "", Sequences$Sequence))
+
+print(Sequences$Sequence)
+```
+
+Counts the numbers of each base pair in each of the three sequences and displays the number in a table.
+```{r}
+seqNames <- substr(Sequences$Name, 2, 11)
+
+df <- data.frame("Sequence ID"=seqNames, "A"=aCount, "T"=tCount, "C"=cCount, "G"=gCount)
+print(df)
+```
+
+Learn more about *Borrelia burgdorferi* via [Wikipedia](https://en.wikipedia.org/wiki/Borrelia_burgdorferi)  
+![Borrelia burgdorferi](https://microbewiki.kenyon.edu/images/thumb/e/ed/Borrelia_Pic.jpeg/300px-Borrelia_Pic.jpeg)  
+  
+Creates a table showing the calculated GC Content as a percentage for each sequence. 
+```{r}
+GC <- df$G + df$C
+ATCG <- df$A + df$T + df$C + df$G
+SequenceIdGCContent <- data.frame("Sequence ID"= df$Sequence.ID, "GC Content" = paste((signif((GC/ATCG*100), digits=3)),"%",sep=""))
+print(SequenceIdGCContent)
+```
+
+
+
